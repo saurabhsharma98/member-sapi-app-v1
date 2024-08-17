@@ -1,0 +1,26 @@
+%dw 2.0
+
+type auto_35a3ae60_7d19_48d1_86ae_01091d67a432_Input_Payload = {|
+  firstName: String, 
+  lastName: String, 
+  maritalStatus: String, 
+  title: String, 
+  gender: String, 
+  occupation: String, 
+  preferredName: String, 
+  identity: {|
+    password: String, 
+    phoneCountry: String, 
+    phoneNumber: String, 
+    email: String
+  |}, 
+  address: {|
+    country: String, 
+    city: String, 
+    area: String, 
+    province: String, 
+    placeOfResidence: String
+  |}
+|} {"mediaType": "application/json",
+"encoding": "UTF-8"}
+

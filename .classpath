@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.mule.tooling.API_SPEC_LIB/b1ffbc7e-d03e-4c71-ae15-9a330c262938/member-system-api/1.0.1"/>
+	<classpathentry kind="con" path="MULE_LIB/com.mulesoft.connectors/mule-salesforce-connector/10.22.0"/>
 	<classpathentry kind="con" path="org.mule.tooling.MULE_PROJECT_LIB"/>
+	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-db-connector/1.14.8"/>
+	<classpathentry kind="con" path="org.mule.tooling.API_SPEC_LIB/7dbe30b7-b1f6-45d0-ad34-30f6f1ccff51/member-sapi-app-v1/1.0.0"/>
+	<classpathentry kind="con" path="MULE_LIB/com.mulesoft.modules/mule-secure-configuration-property-module/1.2.7"/>
 	<classpathentry kind="con" path="org.mule.tooling.API_SPEC_LIB/fb65b8e3-ed19-45bb-8ed8-381cf51c370f/fragment-common-traits/1.0.1"/>
 	<classpathentry kind="con" path="org.mule.tooling.API_SPEC_LIB/fb65b8e3-ed19-45bb-8ed8-381cf51c370f/fragment-common-datatypes/1.0.3"/>
 	<classpathentry kind="con" path="MULE_LIB/org.mule.modules/mule-apikit-module/1.10.3"/>

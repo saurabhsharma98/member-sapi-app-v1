@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="post-member-sync-implementationFlow" doc:id="c6638d1f-38dd-4969-8e98-d102cdeda824" >
+		<db:insert doc:name="Insert" doc:id="1d13a114-2b3d-4cfd-997a-574b91325568" config-ref="Database_Config">
+			<db:sql ><![CDATA[INSERT INTO member.`MEMBER` (`firstName`, `lastName`, `maritalStatus`, `title`, `gender`, `occupation`, `preferredName`, `password`, `phoneCountry`, `phoneNumber`, `email`, `country`, `city`, `area`, `province`, `placeOfResidence`)
+VALUES (:firstName, :lastName, :maritalStatus, :title, :gender, :occupation, :preferredName, :password, :phoneCountry, :phoneNumber, :email, :country, :city, :area, :province, :placeOfResidence);
+]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+    "firstName": payload.firstName,
+    "lastName": payload.lastName,
+    "maritalStatus": payload.maritalStatus ,
+    "title": payload.title,
+    "gender": payload.gender,
+    "occupation": payload.occupation,
+    "preferredName": payload.preferredName,
+        "password": payload.identity.password,
+        "phoneCountry": payload.identity.phoneCountry,
+        "phoneNumber": payload.identity.phoneNumber,
+        "email": payload.identity.email,
+        "country": payload.address.country,
+        "city": payload.address.city,
+        "area": payload.address.area,
+        "province": payload.address.province,
+        "placeOfResidence": payload.address.placeOfResidence
+}]]]></db:input-parameters>
+		</db:insert>
+		<ee:transform doc:name="Transform Message" doc:id="f8d36280-b4c9-49cf-9a48-19cf8d458ae5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+      
+{
+  "msg": "successful operation",
+  "code": 200,
+  "data": {
+    "message": "data inserted successfully"
+  },
+  "success": true
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler ref="globalError_Handler" />
+	</flow>
+</mule>
