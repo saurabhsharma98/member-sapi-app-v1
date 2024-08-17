@@ -1,0 +1,10 @@
+%dw 2.0
+
+type auto_c6638d1f_38dd_4969_8e98_d102cdeda824_Input_Payload = {|
+  msg: String, 
+  code: Number, 
+  data: {| memberId: String |}, 
+  success: Boolean
+|} {"mediaType": "application/json",
+"encoding": "UTF-8"}
+

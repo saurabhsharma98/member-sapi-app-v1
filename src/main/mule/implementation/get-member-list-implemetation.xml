@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="get-member-list-implemetationFlow" doc:id="a4caf9eb-4daa-491d-9df7-3288b274ce90" >
+		<salesforce:query doc:name="Query" doc:id="cf97bc48-53d1-4012-aaba-b77f95e34467" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[select Name,country__C, firstName__c, lastName__c, maritalStatus__c, title__c, gender__c, occupation__c, preferredName__c, password__c, phoneCountry__c, phoneNumber__c, email__c, city__c, area__c, province__c, placeOfResidence__c from member__c]]></salesforce:salesforce-query>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="f75d95a1-1954-46f5-8f91-f1687a105002" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  "memberList": payload map(item, index) -> 
+    {
+      "firstName": item.firstName__c,
+      "lastName": item.lastName__c,
+      "maritalStatus": item.maritalStatus__c,
+      "title": item.title__c,
+      "gender": item.gender__c,
+      "occupation": item.occupation__c ,
+      "preferredName": item.preferredName__c,
+      "identity": {
+        "password": item.password__c,
+        "phoneCountry": item.phoneCountry__c ,
+        "phoneNumber": item.phoneNumber__c ,
+        "email": item.email__c 
+      },
+      "address": {
+        "country": item.country__C default "",
+        "city": item.city__c,
+        "area": item.area__c,
+        "province": item.provience__c,
+        "placeOfResidence": item.placeOfResidence__c
+      }
+    }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler ref="globalError_Handler" />
+	</flow>
+</mule>

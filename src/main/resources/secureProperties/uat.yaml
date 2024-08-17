@@ -1,0 +1,8 @@
+sfdc:
+  security:
+    token: "![JIJzeSprhhNXI7vhS7kUKgFe1OIvGDiVqB+9oGxyw4k=]"
+    password: "![1KyEC+zZz1wMmtFABGttZwa2Tr5nN0io]"
+    
+    
+database:
+  password: "![SH4RrSMCX+cmQLD4kU9kJA==]"

@@ -1,0 +1,14 @@
+%dw 2.0
+
+type auto_a4caf9eb_4daa_491d_9df7_3288b274ce90_Input_Payload = {|
+  msg: String, 
+  code: Number, 
+  success: Boolean, 
+  error: {|
+    "type": String, 
+    title: String, 
+    details: String
+  |}
+|} {"mediaType": "application/json",
+"encoding": "UTF-8"}
+

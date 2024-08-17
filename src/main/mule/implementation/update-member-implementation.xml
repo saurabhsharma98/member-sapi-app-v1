@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<flow name="update-member-implementationFlow" doc:id="634ce0d7-0fa0-4829-90f7-9f5d364754cf" >
+		<ee:transform doc:name="Transform Message" doc:id="6a573e73-5385-42ec-8ad0-5e6f1035c4bf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[{
+	Name: vars.memberId,
+	country__C: payload.address.country,
+	firstName__c: payload.firstName,
+	lastName__c: payload.lastName,
+	maritalStatus__c: payload.maritalStatus,
+	title__c: payload.title,
+	gender__c: payload.gender,
+	occupation__c: payload.occupation,
+	preferredName__c: payload.preferredName,
+	password__c: payload.identity.password,
+	phoneCountry__c: payload.identity.phoneCountry,
+	phoneNumber__c: payload.identity.phoneNumber,
+	email__c: payload.identity.email,
+	city__c: payload.address.city,
+	area__c: payload.address.area,
+	province__c: payload.address.province,
+	placeOfResidence__c: payload.address.placeOfResidence
+}]
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<salesforce:upsert doc:name="Upsert" doc:id="a00bd920-0e61-4d1b-9e47-ccba0d1c117f" config-ref="Salesforce_Config" objectType="member__c" externalIdFieldName="Name"/>
+		<ee:transform doc:name="Transform Message" doc:id="e6d2e506-de74-43b7-875b-daaca471edfd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  msg: "successful operation",
+  code: 200,
+  success: true
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler ref="globalError_Handler" />
+	</flow>
+</mule>

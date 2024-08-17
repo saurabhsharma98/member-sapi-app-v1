@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_35a3ae60_7d19_48d1_86ae_01091d67a432_Output_Variables_memberId = Any
+
